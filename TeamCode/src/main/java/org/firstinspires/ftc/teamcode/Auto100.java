@@ -1,23 +1,16 @@
-/*
-    Teleop code for Team 6366
-    Created by Michael Pate on November 26, 2018
- */
-
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="Teleop 100", group="Iterative Opmode")
+@Autonomous(name="Auto 100", group="Iterative Opmode")
 @Disabled
-public class Teleop100 extends OpMode
-{
-    // Declare OpMode members.
+public class Auto100 extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private DcMotor leftDrive = null;
@@ -56,24 +49,7 @@ public class Teleop100 extends OpMode
     }
 
     @Override
-    public void start() {
-        runtime.reset();
-    }
-
-    @Override
     public void loop() {
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-
-        leftDrive.setPower(-gamepad1.left_stick_y);
-        rightDrive.setPower(-gamepad1.right_stick_y);
-
-        leftMech.setPower(-gamepad2.left_stick_y);
-        rightDrive.setPower(-gamepad2.left_stick_y);
+        // Autonomous code here...
     }
-
-    @Override
-    public void stop() {
-        telemetry.addData("Status", "Done. Total Run Time: " + runtime.toString());
-    }
-
 }
