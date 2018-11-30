@@ -18,6 +18,9 @@ public class Auto100 extends OpMode {
     private DcMotor leftMech = null;
     private DcMotor rightMech = null;
 
+    private Servo lockServo0 = null;
+    private Servo lockServo1 = null;
+
     private Servo colorServo = null;
     ColorSensor colorSensor = null;
 
@@ -29,6 +32,8 @@ public class Auto100 extends OpMode {
         leftMech = hardwareMap.get(DcMotor.class, "left_mech");
         rightMech = hardwareMap.get(DcMotor.class, "right_mech");
         colorServo = hardwareMap.get(Servo.class, "color_servo");
+        lockServo0 = hardwareMap.get(Servo.class, "lock_servo_0");
+        lockServo1 = hardwareMap.get(Servo.class, "lock_servo_1");
         telemetry.addData("Status", "Hardware Mapped.");
 
         telemetry.addData("Status", "Initializing Color Sensor...");
@@ -48,8 +53,30 @@ public class Auto100 extends OpMode {
         telemetry.addData("Status", "Robot Initialized.");
     }
 
+    public void start() {
+        runtime.reset();
+
+        // unlock the servos so that the mechanism unfolds
+        telemetry.addData("Action", "Unlocking Mechanism...");
+        lockServo0.setPosition(1);
+        lockServo1.setPosition(1);
+        telemetry.addData("Action", "Mechanism Unlocked.");
+
+        telemetry.addData("Action", "Unfolding Mechanism...");
+        leftMech.setPower(-0.1);
+        rightMech.setPower(-0.1);
+        double currentMillis = runtime.milliseconds();
+
+        int UNFOLD_DELAY = 500;
+
+        while(runtime.milliseconds() < currentMillis + UNFOLD_DELAY);
+        leftMech.setPower(0);
+        rightMech.setPower(0);
+        telemetry.addData("Action", "Mechanism Unfolded.");
+    }
+
     @Override
     public void loop() {
-        // Autonomous code here...
+        telemetry.addData("Notice", "Waiting for Autonomous Completion...");
     }
 }
